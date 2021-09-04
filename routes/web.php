@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,22 +16,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', function () { return view('welcome'); });
 
-Route::get('/user/{username}', function (string $username) {
-    return "Добро пожаловать в мой проект, {$username}";
-});
+// Страница приветствия
+Route::get('/welcome', [WelcomeController::class, 'index']);
 
-Route::get('/info', function () {
-    return "Здесь будет располагаться информация о будущем проекте.";
-});
+// Страница категорий
+Route::get('/categories', [CategoriesController::class, 'index']);
 
-Route::get('/news/{news_id}', function (int $news_id) {
-    return "Новость под идентификатором - {$news_id}";
-});
+// Страница новостей конкретной категории
+Route::get('/news/{category_id}', [NewsController::class, 'newsByCategory']);
 
-Route::get('/news', function () {
-    return "Здесь будет располагаться список всех новостей сайта";
-});
+// Страница отдельной новости
+Route::get('/single_new/{news_id}', [NewsController::class, 'newsById']);
+
+// Страница добавления новости
+Route::get('/news_add', [NewsController::class, 'addNews']);
+
+// Route::get('/user/{username}', function (string $username) {
+//     return "Добро пожаловать в мой проект, {$username}";
+// });
