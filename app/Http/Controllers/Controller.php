@@ -15,17 +15,17 @@ class Controller extends BaseController
     protected function getCategories(): array
     {
         return [
-            ['id' => 1, 'name' => 'Спорт'],
-            ['id' => 2, 'name' => 'Культура'],
-            ['id' => 3, 'name' => 'Технологии'],
-            ['id' => 4, 'name' => 'Образование'],
-            ['id' => 5, 'name' => 'Медицина'],
+            ['id' => 1, 'name' => 'Sport'],
+            ['id' => 2, 'name' => 'Culture'],
+            ['id' => 3, 'name' => 'Technologies'],
+            ['id' => 4, 'name' => 'Education'],
+            ['id' => 5, 'name' => 'Medicine'],
         ];
     }
 
     protected function getNews(): array
     {
-        $faker = Factory::create('ru_RU');
+        $faker = Factory::create('en_EN');
         $result = [];
         $counter = 1;
 
@@ -35,7 +35,8 @@ class Controller extends BaseController
                     'id' => $counter,
                     'category_id' => $value['id'],
                     'title' => $faker->jobTitle(),
-                    'description' => $faker->sentence(20),
+                    'description' => $faker->sentence(30),
+                    'short' => $faker->sentence(5),
                     'author' => $faker->name(),
                     'created_at' => now()
                 ];

@@ -17,7 +17,7 @@ class NewsController extends Controller
             }
         }
 
-        return view('news.by_cat', [
+        return view('news.index', [
             'news' => $news
         ]);
     }
@@ -29,10 +29,5 @@ class NewsController extends Controller
         return view('news.single', [
             'news' => $result
         ]);
-    }
-
-    public function addNews()
-    {
-        return view('news.add');
     }
 }
