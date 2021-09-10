@@ -12,7 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    protected function getCategories(): array
+    public function getCategories(): array
     {
         return [
             ['id' => 1, 'name' => 'Sport'],

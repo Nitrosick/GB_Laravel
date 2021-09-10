@@ -3,6 +3,8 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\InfoController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +24,7 @@ Route::get('/', function () { return view('welcome/index'); });
 // Админка
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::resource('news', AdminNewsController::class);
+    Route::resource('users', AdminUserController::class);
 });
 
 // Страница приветствия
@@ -45,6 +48,10 @@ Route::get('/single_new/{news_id}', [NewsController::class, 'newsById'])
 // Страница добавления новости
 Route::get('/news_add', [NewsController::class, 'addNews']);
 
-// Route::get('/user/{username}', function (string $username) {
-//     return "Добро пожаловать в мой проект, {$username}";
-// });
+// Страница обратной связи
+Route::get('/feedback', [InfoController::class, 'feedback'])
+    ->name('feedback');
+
+// Форма получения данных
+Route::get('/data', [InfoController::class, 'getData'])
+    ->name('data');

@@ -71,6 +71,13 @@ main nav .menu_link:hover {
   color: white;
   transition: 0.5s;
 }
+main nav .active {
+  color: #367BA3;
+}
+main nav .active:hover {
+  background-color: white;
+  color: #367BA3;
+}
 main .admin_navbar {
   color: white;
   background-color: #367BA3;
@@ -79,12 +86,19 @@ main .admin_navbar .menu_title {
   border-bottom: 1px solid #86C9F0;
 }
 main .admin_navbar .menu_link {
-  color: white;
+  color: #E3E3E3;
 }
 main .admin_navbar .menu_link:hover {
   background-color: white;
   color: #303030;
   transition: 0.5s;
+}
+main .admin_navbar .active {
+  color: white;
+}
+main .admin_navbar .active:hover {
+  background-color: #367BA3;
+  color: white;
 }
 main .content {
   margin: 15px;
@@ -196,4 +210,55 @@ main .content .admin_table th {
 }
 main .content .admin_table td {
   font-size: 16px;
+}
+.alert {
+  padding: 10px;
+  margin-bottom: 5px;
+  background-color: #b32f25;
+  border-radius: 5px;
+  color: #E3E3E3;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  background-color: #E3E3E3;
+  border-radius: 10px;
+  padding: 10px 20px 20px 20px;
+  margin: 10px 0;
+}
+form .form-group {
+  margin: 10px 0;
+}
+form .form-group input,
+form .form-group textarea {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: white;
+  border-radius: 5px;
+  border: none;
+  resize: none;
+}
+form .form-group input:focus,
+form .form-group textarea:focus,
+form .form-group input:active,
+form .form-group textarea:active {
+  outline: none;
+}
+form .success {
+  align-self: flex-end;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 40px;
+  background-color: #367BA3;
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  color: white;
+  cursor: pointer;
+  transition: 0.5s;
+}
+form .success:hover {
+  background-color: white;
+  color: #303030;
+  transition: 0.5s;
 }

@@ -1,6 +1,6 @@
 @extends('layouts.main')
 @section('content')
-@section('title') Welcome to News Agreagtor! - @parent @stop
+@section('title') Welcome to News Agreagtor! @parent @stop
 
 <div class="welcome">
     <img src="{{ asset('assets/images/welcome.png') }}" alt="welcome">
