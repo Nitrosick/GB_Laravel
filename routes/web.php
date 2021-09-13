@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\InfoController;
 use App\Http\Controllers\WelcomeController;
@@ -24,6 +25,7 @@ Route::get('/', function () { return view('welcome/index'); });
 // Админка
 Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::resource('news', AdminNewsController::class);
+    Route::resource('categories', AdminCategoriesController::class);
     Route::resource('users', AdminUserController::class);
 });
 

@@ -44,10 +44,10 @@ class NewsTest extends TestCase
 		])->assertStatus(200);
 	}
 
-    public function test_view_content()
-	{
-		$response = $this->get('/welcome');
+    // public function test_view_content()
+	// {
+	// 	$response = $this->get('/welcome');
 
-        $response->assertHeader('title', 'Welcome')->assertStatus(200);
-	}
+    //     $response->assertHeader('title', 'Welcome')->assertStatus(200);
+	// }
 }

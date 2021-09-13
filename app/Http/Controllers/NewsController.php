@@ -3,31 +3,25 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\News;
 
 class NewsController extends Controller
 {
     public function newsByCategory(int $id)
     {
-        $allNews = $this->getNews();
-        $news = [];
-
-        foreach ($allNews as $value) {
-            if ($value['category_id'] === $id) {
-                $news[] = $value;
-            }
-        }
+        $model = new News();
 
         return view('news.index', [
-            'news' => $news
-        ]);
+			'newsList' => $model->getNewsByCat($id)
+		]);
     }
 
     public function newsById(int $id)
     {
-        $result = $this->getNewsById($id);
+        $model = new News();
 
         return view('news.single', [
-            'news' => $result
-        ]);
+			'news' => $model->getNewsById($id)
+		]);
     }
 }

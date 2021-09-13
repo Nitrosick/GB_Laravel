@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\News;
+use App\Models\Category;
 
-class NewsController extends Controller
+class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,11 +15,11 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $model = new News();
+        $model = new Category();
 
-        return view('admin.news.index', [
-			'newsList' => $model->getNews()
-		]);
+        return view('admin.categories.index', [
+			'categoriesList' => $model->getCategories()
+ 		]);
     }
 
     /**
@@ -29,7 +29,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        return view('admin.news.add');
+        //
     }
 
     /**
@@ -40,13 +40,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-			'title' => ['required', 'string', 'min:5'],
-			'author' => ['required', 'string', 'min:3'],
-			'description' => ['required', 'string', 'min:10'],
-		]);
-
-		return redirect()->route('admin.news.index');
+        //
     }
 
     /**
@@ -54,7 +48,7 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(News $news)
+    public function show(Category $category)
     {
         //
     }
@@ -64,7 +58,7 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit(News $news)
+    public function edit(Category $category)
     {
         //
     }
@@ -75,7 +69,7 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, News $news)
+    public function update(Request $request, Category $category)
     {
         //
     }
@@ -85,7 +79,7 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy(News $news)
+    public function destroy(Category $category)
     {
         //
     }
