@@ -9,19 +9,22 @@ class NewsController extends Controller
 {
     public function newsByCategory(int $id)
     {
-        $model = new News();
+      $newsList = News::where('category_id', $id)
+			  ->paginate(
+				  config('news.paginate')
+			);
 
-        return view('news.index', [
-			'newsList' => $model->getNewsByCat($id)
-		]);
+      return view('news.index', [
+          'newsList' => $newsList
+      ]);
     }
 
     public function newsById(int $id)
     {
-        $model = new News();
+      $news = News::where('id', $id)->first();
 
-        return view('news.single', [
-			'news' => $model->getNewsById($id)
-		]);
+      return view('news.single', [
+          'news' => $news
+      ]);
     }
 }

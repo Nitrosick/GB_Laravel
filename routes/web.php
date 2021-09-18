@@ -5,7 +5,8 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
-use App\Http\Controllers\InfoController;
+use App\Http\Controllers\UserRequestController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -29,6 +30,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
     Route::resource('users', AdminUserController::class);
 });
 
+// Удаление новости
+Route::get('/news/delete/{id}', [AdminNewsController::class, 'destroy'])
+    ->where('id', '\d+')
+	->name('news_delete');
+
 // Страница приветствия
 Route::get('/welcome', [WelcomeController::class, 'index'])
     ->name('welcome');
@@ -51,9 +57,7 @@ Route::get('/single_new/{news_id}', [NewsController::class, 'newsById'])
 Route::get('/news_add', [NewsController::class, 'addNews']);
 
 // Страница обратной связи
-Route::get('/feedback', [InfoController::class, 'feedback'])
-    ->name('feedback');
+Route::resource('feedback', FeedbackController::class);
 
 // Форма получения данных
-Route::get('/data', [InfoController::class, 'getData'])
-    ->name('data');
+Route::resource('request', UserRequestController::class);

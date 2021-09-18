@@ -13,4 +13,6 @@
     @endforelse
 </div>
 
+{!! $categoriesList->links() !!}
+
 @endsection

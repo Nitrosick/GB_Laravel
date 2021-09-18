@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\Feedback;
 
-class UserController extends Controller
+class FeedbackController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('feedbacks.index');
     }
 
     /**
@@ -36,7 +35,24 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+			'username' => ['required', 'string', 'min:3'],
+			'content' => ['required', 'string', 'min:10']
+		]);
+
+        $feedback = Feedback::create(
+			$request->only(['username', 'content'])
+		);
+
+		if($feedback) {
+			return redirect()
+				->route('feedback.create')
+				->with('success', 'Feedback added');
+		}
+
+		return back()
+			->with('error', 'Error adding a feedback')
+			->withInput();
     }
 
     /**

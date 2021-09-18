@@ -14,4 +14,6 @@
     @endforelse
 </div>
 
+{!! $newsList->links() !!}
+
 @endsection

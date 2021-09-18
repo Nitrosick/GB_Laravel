@@ -64,10 +64,6 @@ main {
     flex-grow: 1;
 
     nav {
-        margin: 15px;
-        padding: 30px;
-        min-width: 300px;
-        text-align: center;
 
         .menu_title {
             padding-bottom: 20px;
@@ -96,9 +92,50 @@ main {
                 color: @admin-bar;
             }
         }
+
+        .to_admin {
+            font-size: 20px;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid @borders-color;
+        }
+
+        .pagination {
+            list-style-type: none;
+            display: flex;
+            justify-content: center;
+            background-color: @borders-color;
+            padding: 10px;
+            margin: 5px;
+            border-radius: 5px;
+
+            .page-item {
+                margin: 0 10px;
+            }
+
+            .active {
+                cursor: default;
+                color: @admin-bar;
+
+                &:hover {
+                    background-color: transparent;
+                }
+            }
+        }
+    }
+
+    .main_navbar {
+        margin: 15px;
+        padding: 30px;
+        min-width: 300px;
+        text-align: center;
     }
 
     .admin_navbar {
+        margin: 15px;
+        padding: 30px;
+        min-width: 300px;
+        text-align: center;
         color: white;
         background-color: @admin-bar;
 
@@ -123,6 +160,13 @@ main {
                 background-color: @admin-bar;
                 color: white;
             }
+        }
+
+        .to_main {
+            font-size: 20px;
+            padding-top: 20px;
+            margin-top: 20px;
+            border-top: 1px solid #86C9F0;
         }
     }
 
@@ -257,16 +301,26 @@ main {
             td {
                 font-size: 16px;
             }
+
+            .description_cell {
+                font-size: 12px;
+            }
         }
     }
 }
 
-.alert {
+.alert,
+.success {
     padding: 10px;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     background-color: #b32f25;
     border-radius: 5px;
     color: @borders-color;
+}
+
+.success {
+    background-color: #5ead6b;
+    color: white;
 }
 
 form {
@@ -280,10 +334,13 @@ form {
     .form-group {
         margin: 10px 0;
 
-        input, textarea {
+        input, textarea, select {
             display: block;
             width: 100%;
             padding: 10px;
+            font-family: 'Poppins', sans-serif;
+            color: @text-color;
+            font-size: 16px;
             background-color: white;
             border-radius: 5px;
             border: none;

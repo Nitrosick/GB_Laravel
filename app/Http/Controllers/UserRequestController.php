@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Models\UserRequest;
 
-class UserController extends Controller
+class UserRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -25,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('requests.index');
     }
 
     /**
@@ -36,7 +35,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+			'username' => ['required', 'string', 'min:3'],
+			'phone' => ['required', 'numeric', 'min:11'],
+			'email' => ['required', 'email'],
+			'content' => ['required', 'string', 'min:10']
+		]);
+
+        $req = UserRequest::create(
+			$request->only(['username', 'phone', 'email', 'content'])
+		);
+
+		if($req) {
+			return redirect()
+				->route('request.create')
+				->with('success', 'Request added');
+		}
+
+		return back()
+			->with('error', 'Error adding a request')
+			->withInput();
     }
 
     /**
