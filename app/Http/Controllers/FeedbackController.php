@@ -14,7 +14,11 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+        $feedbacksList = Feedback::paginate(16);
+
+        return view('admin.feedbacks.index', [
+            'feedbacksList' => $feedbacksList
+        ]);
     }
 
     /**

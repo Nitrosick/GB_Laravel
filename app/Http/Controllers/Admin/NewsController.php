@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\News;
+use Illuminate\Support\Facades\Log;
 
 class NewsController extends Controller
 {
@@ -17,9 +18,7 @@ class NewsController extends Controller
     public function index()
     {
         $newsList = News::with('category')
-			->paginate(
-				config(10)
-			);
+			->paginate(10);
 
         return view('admin.news.index', [
             'newsList' => $newsList
@@ -130,16 +129,20 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(int $id)
+    public function destroy(Request $request, News $news)
     {
-        $news = News::find($id);
-        $news->delete();
+        if($request->ajax()) {
+            try {
+                $news->delete();
+                return response()->json(['message' => 'success']);
 
-        return redirect()
-			->route('admin.news.index')
-			->with('success', 'The news was successfully deleted');
+            } catch (\Exception $e) {
+                Log::error("Error delete news" . PHP_EOL, [$e]);
+                return response()->json(['message' => 'error'], 400);
+            }
+        }
     }
 }

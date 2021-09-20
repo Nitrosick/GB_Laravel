@@ -29,7 +29,7 @@
 			<td>
 				<a href="{{ route('admin.categories.edit', ['category' => $category->id]) }}">Edit</a>
 				<br>
-				<a href="{{ route('admin.categories.destroy', ['category' => $category]) }}">Del.</a>
+				<a href="javascript:;" class="cayegory_delete" rel="{{ $category->id }}">Del.</a>
 			</td>
 		</tr>
 		@empty
@@ -41,3 +41,31 @@
 {!! $categoriesList->links() !!}
 
 @endsection
+
+@push('js')
+	<script type="text/javascript">
+		$(function() {
+			$(".cayegory_delete").on('click', function() {
+
+				var id = $(this).attr("rel");
+
+			    if(confirm("Are you sure you want to delete the category with ID " + id + "?")) {
+				  	$.ajax({
+						type: "delete",
+						headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						url: "/admin/categories/" + id,
+						success: function (response) {
+							console.log(response);
+							location.reload();
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				}
+			});
+		});
+	</script>
+@endpush

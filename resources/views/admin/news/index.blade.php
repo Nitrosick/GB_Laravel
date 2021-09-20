@@ -35,7 +35,7 @@
 			<td>
 				<a href="{{ route('admin.news.edit', ['news' => $news->id]) }}">Edit</a>
 				<br>
-				<a href="{{ route('news_delete', ['id' => $news->id]) }}">Del.</a>
+				<a href="javascript:;" class="news_delete" rel="{{ $news->id }}">Del.</a>
 			</td>
 		</tr>
 		@empty
@@ -47,3 +47,31 @@
 {!! $newsList->links() !!}
 
 @endsection
+
+@push('js')
+	<script type="text/javascript">
+		$(function() {
+			$(".news_delete").on('click', function() {
+
+				var id = $(this).attr("rel");
+
+			    if(confirm("Are you sure you want to delete the news with ID " + id + "?")) {
+				  	$.ajax({
+						type: "delete",
+						headers: {
+						'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						},
+						url: "/admin/news/" + id,
+						success: function (response) {
+							console.log(response);
+							location.reload();
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+				}
+			});
+		});
+	</script>
+@endpush

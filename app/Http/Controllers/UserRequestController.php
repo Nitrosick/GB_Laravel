@@ -14,7 +14,11 @@ class UserRequestController extends Controller
      */
     public function index()
     {
-        //
+        $requestsList = UserRequest::paginate(16);
+
+        return view('admin.requests.index', [
+            'requestsList' => $requestsList
+        ]);
     }
 
     /**

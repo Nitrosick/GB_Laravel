@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\Log;
 
 class CategoriesController extends Controller
 {
@@ -16,9 +17,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = Category::withCount('news')
-            ->paginate(
-                config(10)
-            );
+            ->paginate(10);
 
         return view('admin.categories.index', [
 			'categoriesList' => $categories
@@ -103,11 +102,11 @@ class CategoriesController extends Controller
         if($category) {
 			return redirect()
 			    ->route('admin.categories.index')
-				->with('success', 'The entry was successfully added');
+				->with('success', 'The entry was successfully updated');
 		}
 
 		return back()
-			->with('error', 'Error when adding an entry')
+			->with('error', 'Error when updating an entry')
 			->withInput();
     }
 
@@ -115,10 +114,19 @@ class CategoriesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Category $category
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request, Category $category)
     {
-        //
+        if($request->ajax()) {
+            try {
+                $category->delete();
+                return response()->json(['message' => 'success']);
+
+            } catch (\Exception $e) {
+                Log::error("Error delete news" . PHP_EOL, [$e]);
+                return response()->json(['message' => 'error'], 400);
+            }
+        }
     }
 }
