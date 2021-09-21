@@ -34,20 +34,4 @@ class NewsTest extends TestCase
 
 		$response->assertStatus(200);
 	}
-
-	public function test_categories_data()
-	{
-		$response = $this->get('/api/data');
-		$response->assertJson([
-			'id' => '1',
-			'name' => 'Sport'
-		])->assertStatus(200);
-	}
-
-    // public function test_view_content()
-	// {
-	// 	$response = $this->get('/welcome');
-
-    //     $response->assertHeader('title', 'Welcome')->assertStatus(200);
-	// }
 }

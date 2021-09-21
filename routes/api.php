@@ -18,15 +18,3 @@ use App\Http\Controllers\Controller;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('/data', function() {
-    $controller = new Controller();
-    $data = $controller->getCategories();
-
-    return response()->json(
-		[
-			'id' => $data[0]['id'],
-			'name' => $data[0]['name']
-		]
-	);
-});

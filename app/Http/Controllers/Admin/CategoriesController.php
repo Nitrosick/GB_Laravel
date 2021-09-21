@@ -6,13 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\CategoryCreateRequest;
+use App\Http\Requests\CategoryUpdateRequest;
 
 class CategoriesController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -27,7 +29,7 @@ class CategoriesController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -37,28 +39,21 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\CategoryCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CategoryCreateRequest $request)
     {
-        $request->validate([
-			'title' => ['required', 'string', 'min:5'],
-			'description' => ['required', 'string', 'min:10']
-		]);
-
-        $categories = Category::create(
-			$request->only(['title', 'description'])
-		);
+        $categories = Category::create($request->validated());
 
 		if($categories) {
 			return redirect()
 				->route('admin.categories.index')
-				->with('success', 'The entry was successfully added');
+				->with('success', __('messages.admin.categories.create.success'));
 		}
 
 		return back()
-			->with('error', 'Error when adding an entry')
+            ->with('error', __('messages.admin.categories.create.fail'))
 			->withInput();
     }
 
@@ -77,7 +72,7 @@ class CategoriesController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param Category $category
-     * @return \Illuminate\Http\Response
+     * @return @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Category $category)
     {
@@ -90,23 +85,21 @@ class CategoriesController extends Controller
      * Update the specified resource in storage.
      *
      * @param Category $category
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\CategoryUpdateRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Category $category)
+    public function update(CategoryUpdateRequest $request, Category $category)
     {
-        $category = $category->fill(
-			$request->only(['title', 'description'])
-		)->save();
+        $category = $category->fill($request->validated())->save();
 
         if($category) {
 			return redirect()
 			    ->route('admin.categories.index')
-				->with('success', 'The entry was successfully updated');
+				->with('success', __('messages.admin.categories.update.success'));
 		}
 
 		return back()
-			->with('error', 'Error when updating an entry')
+            ->with('error', __('messages.admin.categories.update.fail'))
 			->withInput();
     }
 

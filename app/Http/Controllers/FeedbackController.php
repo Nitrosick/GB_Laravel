@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use App\Http\Requests\FeedbackCreateRequest;
 
 class FeedbackController extends Controller
 {
@@ -34,28 +35,21 @@ class FeedbackController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\FeedbackCreateRequest $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(FeedbackCreateRequest $request)
     {
-        $request->validate([
-			'username' => ['required', 'string', 'min:3'],
-			'content' => ['required', 'string', 'min:10']
-		]);
-
-        $feedback = Feedback::create(
-			$request->only(['username', 'content'])
-		);
+        $feedback = Feedback::create($request->validated());
 
 		if($feedback) {
 			return redirect()
 				->route('feedback.create')
-				->with('success', 'Feedback added');
+				->with('success', __('messages.admin.feedbacks.create.success'));
 		}
 
 		return back()
-			->with('error', 'Error adding a feedback')
+            ->with('error', __('messages.admin.feedbacks.create.fail'))
 			->withInput();
     }
 

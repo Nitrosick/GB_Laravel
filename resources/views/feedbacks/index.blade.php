@@ -6,6 +6,7 @@
 
 <form method="post" action="{{ route('feedback.store') }}">
 @csrf
+
 <div class="form-group">
     <label for="username">Username</label>
     <input type="text" name="username" id="username" value="{{ old('username') }}">
@@ -15,6 +16,7 @@
     <label for="content">Feedback</label>
     <textarea rows="10" name="content" id="content">{!! old('content') !!}</textarea>
 </div>
+
 <button type="submit" class="success">SEND</button>
 </form>
 

@@ -2,8 +2,6 @@
 @section('title') Edit Category @parent @stop
 @section('content')
 
-@include('inc.messages')
-
 <form method="post" action="{{ route('admin.categories.update', ['category' => $category]) }}">
 @csrf
 @method('put')
@@ -13,10 +11,15 @@
     <input type="text" name="title" id="title" value="{{ $category->title }}">
 </div>
 
+@error('title') <div class="alert">{{ $message }}</div> @enderror
+
 <div class="form-group">
     <label for="description">Description</label>
     <textarea rows="10" name="description" id="description">{!! $category->description !!}</textarea>
 </div>
+
+@error('description') <div class="alert">{{ $message }}</div> @enderror
+
 <button type="submit" class="success">SAVE</button>
 </form>
 

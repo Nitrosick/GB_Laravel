@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\UserRequest;
+use App\Http\Requests\UserRequestCreate;
 
 class UserRequestController extends Controller
 {
@@ -34,30 +35,21 @@ class UserRequestController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param  \Illuminate\Http\UserRequestCreate $request
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(UserRequestCreate $request)
     {
-        $request->validate([
-			'username' => ['required', 'string', 'min:3'],
-			'phone' => ['required', 'numeric', 'min:11'],
-			'email' => ['required', 'email'],
-			'content' => ['required', 'string', 'min:10']
-		]);
-
-        $req = UserRequest::create(
-			$request->only(['username', 'phone', 'email', 'content'])
-		);
+        $req = UserRequest::create($request->validated());
 
 		if($req) {
 			return redirect()
 				->route('request.create')
-				->with('success', 'Request added');
+				->with('success', __('messages.admin.requests.create.success'));
 		}
 
 		return back()
-			->with('error', 'Error adding a request')
+            ->with('error', __('messages.admin.requests.create.fail'))
 			->withInput();
     }
 

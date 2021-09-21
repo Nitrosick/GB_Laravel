@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\News;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\NewsCreateRequest;
+use App\Http\Requests\NewsUpdateRequest;
 
 class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -42,30 +44,21 @@ class NewsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\NewsCreateRequest  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(NewsCreateRequest $request)
     {
-        $request->validate([
-			'title' => ['required', 'string', 'min:5'],
-			'author' => ['required', 'string', 'min:3'],
-			'description' => ['required', 'string', 'min:10'],
-            'short' => ['required', 'string', 'min:10']
-		]);
-
-        $news = News::create(
-			$request->only(['category_id', 'title', 'author', 'description'])
-		);
+        $news = News::create($request->validated());
 
 		if($news) {
 			return redirect()
 				->route('admin.news.index')
-				->with('success', 'The entry was successfully added');
+                ->with('success', __('messages.admin.news.create.success'));
 		}
 
 		return back()
-			->with('error', 'Error when adding an entry')
+            ->with('error', __('messages.admin.news.create.fail'))
 			->withInput();
     }
 
@@ -84,7 +77,7 @@ class NewsController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param News $news
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(News $news)
     {
@@ -100,29 +93,21 @@ class NewsController extends Controller
      * Update the specified resource in storage.
      *
      * @param News $news
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\NewsUpdateRequest $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, News $news)
+    public function update(NewsUpdateRequest $request, News $news)
     {
-        $request->validate([
-			'title' => ['required', 'string', 'min:5'],
-			'author' => ['required', 'string', 'min:3'],
-			'description' => ['required', 'string', 'min:10']
-		]);
-
-        $news = $news->fill(
-			$request->only(['category_id', 'title', 'author', 'description'])
-		)->save();
+        $news = $news->fill($request->validated())->save();
 
 		if($news) {
 			return redirect()
 				->route('admin.news.index')
-				->with('success', 'The entry was successfully updated');
+                ->with('success', __('messages.admin.news.update.success'));
 		}
 
 		return back()
-			->with('error', 'Error when updating an entry')
+            ->with('error', __('messages.admin.news.update.fail'))
 			->withInput();
     }
 
