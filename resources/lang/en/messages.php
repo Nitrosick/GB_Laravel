@@ -32,6 +32,12 @@ return [
                 'success' => 'The request has been successfully added',
                 'fail'    => 'Error when adding an entry'
             ]
-        ]
+        ],
+        'users' => [
+		    'update' => [
+			    'success' => "The user's data has been updated",
+			    'fail'    => 'Error when updating an entry'
+		    ]
+        ],
 	]
 ];

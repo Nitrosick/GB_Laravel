@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Account\IndexController as AccountController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
@@ -8,6 +9,7 @@ use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\WelcomeController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,18 +23,24 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () { return view('welcome/index'); });
+Route::get('/', function () { return view('account.index'); });
 
-// Админка
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function() {
-    Route::resource('news', AdminNewsController::class);
-    Route::resource('categories', AdminCategoriesController::class);
-    Route::resource('users', AdminUserController::class);
+// Авторизация
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/account', AccountController::class)
+        ->name('account');
+    Route::get('/logout', function() {
+        Auth::logout();
+        return redirect()->route('login');
+    })->name('logout');
+
+    // Админка
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => 'admin'], function() {
+        Route::resource('news', AdminNewsController::class);
+        Route::resource('categories', AdminCategoriesController::class);
+        Route::resource('users', AdminUserController::class);
+    });
 });
-
-// Страница приветствия
-Route::get('/welcome', [WelcomeController::class, 'index'])
-    ->name('welcome');
 
 // Страница категорий
 Route::get('/categories', [CategoriesController::class, 'index'])
@@ -56,3 +64,11 @@ Route::resource('feedback', FeedbackController::class);
 
 // Форма получения данных
 Route::resource('request', UserRequestController::class);
+
+// Страница о проекте
+Route::get('/about', [WelcomeController::class, 'index'])
+    ->name('about');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

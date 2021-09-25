@@ -31,13 +31,22 @@ h2 {
   border-radius: 10px;
   box-shadow: 5px 5px 30px -20px black;
 }
+.plug {
+  flex-grow: 1;
+}
 header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 15px;
   padding: 30px;
 }
 header .logo {
   font-weight: 900;
   font-size: 50px;
+}
+header .auth_link {
+  margin: 0 20px;
 }
 footer {
   display: flex;
@@ -71,12 +80,6 @@ main nav .active {
 main nav .active:hover {
   background-color: white;
   color: #367BA3;
-}
-main nav .to_admin {
-  font-size: 20px;
-  padding-top: 20px;
-  margin-top: 20px;
-  border-top: 1px solid #E3E3E3;
 }
 main nav .pagination {
   list-style-type: none;
@@ -149,6 +152,10 @@ main .content .welcome {
 }
 main .content .welcome span {
   max-width: 450px;
+}
+main .content .to_admin {
+  padding: 10px 20px;
+  border-top: 1px solid #E3E3E3;
 }
 main .content .categories_block {
   display: flex;
@@ -248,6 +255,19 @@ main .content .admin_table td {
 }
 main .content .admin_table .description_cell {
   font-size: 12px;
+}
+main .content .admin_table .form_cell {
+  padding: 0;
+}
+main .content .admin_table .form_cell form {
+  margin: 0;
+  padding: 0;
+}
+main .content .admin_table .form_cell form button[type='submit'] {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
 }
 .alert,
 .success {
