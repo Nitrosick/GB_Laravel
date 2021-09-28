@@ -150,6 +150,11 @@ main .content .welcome {
   align-items: center;
   height: 100%;
 }
+main .content .welcome .avatar {
+  width: 300px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
 main .content .welcome span {
   max-width: 450px;
 }

@@ -5,9 +5,11 @@ use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
+use App\Http\Controllers\Admin\ParserController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\UserRequestController;
 use App\Http\Controllers\FeedbackController;
+use App\Http\Controllers\SocialController;
 use App\Http\Controllers\WelcomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -39,7 +41,22 @@ Route::group(['middleware' => 'auth'], function() {
         Route::resource('news', AdminNewsController::class);
         Route::resource('categories', AdminCategoriesController::class);
         Route::resource('users', AdminUserController::class);
+
+        Route::get('/parser', ParserController::class)
+            ->name('parser');
     });
+});
+
+// Соцсети
+Route::group(['middleware' => 'guest'], function() {
+    Route::get('/vk/start', [SocialController::class, 'vkStart'])
+        ->name('vk.start');
+    Route::get('/vk/callback', [SocialController::class, 'vkCallback'])
+        ->name('vk.callback');
+    Route::get('/google/start', [SocialController::class, 'googleStart'])
+        ->name('google.start');
+    Route::get('/google/callback', [SocialController::class, 'googleCallback'])
+        ->name('google.callback');
 });
 
 // Страница категорий
