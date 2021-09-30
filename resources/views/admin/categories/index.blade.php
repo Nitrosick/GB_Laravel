@@ -4,6 +4,10 @@
 
 @include('inc.messages')
 
+<div class="control_buttons">
+	<a class="control_button" href="{{ route('admin.categories.create') }}">CREATE CATEGORY</a>
+</div>
+
 {!! $categoriesList->links() !!}
 
 <table class="admin_table">
@@ -12,6 +16,7 @@
         <th>ID</th>
         <th>News count</th>
         <th>Title</th>
+        <th>Tag</th>
         <th>Description</th>
         <th>Created</th>
         <th>Control</th>
@@ -24,6 +29,7 @@
 			<th>{{ $category->id }}</th>
 			<td>{{ $category->news_count }}</td>
 			<td>{{ $category->title }}</td>
+			<td>{{ $category->tag }}</td>
 			<td>{{ $category->description }}</td>
 			<td>{{ $category->created_at }}</td>
 			<td>

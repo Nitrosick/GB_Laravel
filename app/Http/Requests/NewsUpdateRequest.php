@@ -24,10 +24,10 @@ class NewsUpdateRequest extends FormRequest
     public function rules()
     {
         return [
+			'guid' => ['string', 'min:5'],
 			'title' => ['required', 'string', 'min:5'],
 			'author' => ['required', 'string', 'min:3'],
 			'description' => ['required', 'string', 'min:10'],
-            'short' => ['required', 'string', 'min:10'],
             'image'  => ['sometimes']
 		];
     }

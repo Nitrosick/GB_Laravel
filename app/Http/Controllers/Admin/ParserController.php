@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Contract\Parser;
 use App\Http\Controllers\Controller;
+use App\Jobs\NewsJob;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ParserController extends Controller
 {
@@ -17,13 +17,31 @@ class ParserController extends Controller
      */
     public function __invoke(Request $request, Parser $service)
     {
-        $result = $service->parse('https://news.yandex.ru/games.rss');
+        $urls = [
+            'https://news.yandex.ru/auto.rss',
+            'https://news.yandex.ru/auto_racing.rss',
+            'https://news.yandex.ru/army.rss',
+            'https://news.yandex.ru/gadgets.rss',
+            'https://news.yandex.ru/index.rss',
+            'https://news.yandex.ru/martial_arts.rss',
+            'https://news.yandex.ru/communal.rss',
+            'https://news.yandex.ru/health.rss',
+            'https://news.yandex.ru/games.rss',
+            'https://news.yandex.ru/internet.rss',
+            'https://news.yandex.ru/cyber_sport.rss',
+            'https://news.yandex.ru/movies.rss',
+            'https://news.yandex.ru/cosmos.rss',
+            'https://news.yandex.ru/culture.rss',
+            'https://news.yandex.ru/fire.rss',
+            'https://news.yandex.ru/championsleague.rss',
+            'https://news.yandex.ru/music.rss',
+            'https://news.yandex.ru/nhl.rss',
+        ];
 
-        foreach ($result['news'] as $value) {
-            DB::insert("insert into out_news (title, link, guid, description)
-                        values ('{$value['title']}', '{$value['link']}', '{$value['guid']}', '{$value['description']}')");
+        foreach ($urls as $url) {
+            dispatch(new NewsJob($url));
         }
 
-        return redirect()->route('admin.news.index');
+        return back()->with('success', 'News added to the queue');
     }
 }

@@ -15,16 +15,17 @@ class CreateNewsTable extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+            $table->string('guid')->unique();
 
 			$table->foreignId('category_id')
 				->constrained('categories')
 				->onDelete('cascade');
 
+            $table->string('link', 255)->nullable();
 			$table->string('title', 255);
             $table->text('description')->nullable();
-            $table->string('short', 255)->nullable();
-			$table->string('image', 255)->nullable();
-			$table->string('author', 50)->nullable();
+			$table->string('image', 255)->default('news/news-plug.png');
+			$table->string('author', 50)->default('Unknown');
             $table->timestamps();
         });
     }

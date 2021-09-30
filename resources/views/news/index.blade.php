@@ -3,11 +3,10 @@
 @section('content')
 
 <div class="news_block">
-    @forelse ($newsList as $value)
-        <a class="news_tile" href='{{ route('news_by_id', ['news_id' => $value->id]) }}'>
-            <img src="{{ asset('assets/images/news-plug.png') }}" alt="plug">
-            <h2>{{ $value->title }}</h2>
-            <span class="short">{{ $value->short }}</span>
+    @forelse ($newsList as $news)
+        <a class="news_tile" href='{{ route('news_by_id', ['news_id' => $news->id]) }}'>
+            <img src="{{ Storage::disk('public')->url($news->image) }}" alt="image">
+            <span>{{ $news->title }}</span>
         </a>
     @empty
         <h2>No news</h2>

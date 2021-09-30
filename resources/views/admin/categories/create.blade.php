@@ -13,6 +13,13 @@
 @error('title') <div class="alert">{{ $message }}</div> @enderror
 
 <div class="form-group">
+    <label for="tag">Tag</label>
+    <input type="text" name="tag" id="tag" value="{{ old('tag') }}">
+</div>
+
+@error('tag') <div class="alert">{{ $message }}</div> @enderror
+
+<div class="form-group">
     <label for="description">Description</label>
     <textarea rows="10" name="description" id="description">{!! old('description') !!}</textarea>
 </div>

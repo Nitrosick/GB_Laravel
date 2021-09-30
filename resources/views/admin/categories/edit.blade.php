@@ -14,6 +14,13 @@
 @error('title') <div class="alert">{{ $message }}</div> @enderror
 
 <div class="form-group">
+    <label for="tag">Title</label>
+    <input type="text" name="tag" id="tag" value="{{ $category->tag }}">
+</div>
+
+@error('tag') <div class="alert">{{ $message }}</div> @enderror
+
+<div class="form-group">
     <label for="description">Description</label>
     <textarea rows="10" name="description" id="description">{!! $category->description !!}</textarea>
 </div>

@@ -9,6 +9,7 @@ use App\Models\News;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\NewsCreateRequest;
 use App\Http\Requests\NewsUpdateRequest;
+use App\Services\UploadService;
 
 class NewsController extends Controller
 {
@@ -49,7 +50,15 @@ class NewsController extends Controller
      */
     public function store(NewsCreateRequest $request)
     {
-        $news = News::create($request->validated());
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $uploadService = app(UploadService::class);
+            $imageUrl = $uploadService->upload($request->file('image'));
+            $data['image'] = $imageUrl;
+        }
+
+        $news = News::create($data);
 
 		if($news) {
 			return redirect()
@@ -98,7 +107,15 @@ class NewsController extends Controller
      */
     public function update(NewsUpdateRequest $request, News $news)
     {
-        $news = $news->fill($request->validated())->save();
+        $data = $request->validated();
+
+        if ($request->hasFile('image')) {
+            $uploadService = app(UploadService::class);
+            $imageUrl = $uploadService->upload($request->file('image'));
+            $data['image'] = $imageUrl;
+        }
+
+        $news = $news->fill($data)->save();
 
 		if($news) {
 			return redirect()

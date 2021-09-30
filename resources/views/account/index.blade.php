@@ -14,7 +14,9 @@
 
         <h2>{{ Auth::user()->name }}</h2>
         <br>
-        <a class="to_admin" href="{{ route('admin.news.index') }}">ADMIN BAR</a>
+        @if (Auth::user()->is_admin)
+            <a class="to_admin" href="{{ route('admin.news.index') }}">ADMIN BAR</a>
+        @endif
     @endif
 </div>
 

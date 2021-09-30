@@ -4,6 +4,11 @@
 
 @include('inc.messages')
 
+<div class="control_buttons">
+	<a class="control_button" href="{{ route('admin.news.create') }}">CREATE NEWS</a>
+	<a class="control_button" href="{{ route('admin.parser') }}">PARSE NEWS</a>
+</div>
+
 {!! $newsList->links() !!}
 
 <table class="admin_table">
@@ -12,10 +17,9 @@
         <th>ID</th>
         <th>Category</th>
         <th>Title</th>
+		<th>Description</th>
+		<th>Image</th>
         <th>Author</th>
-        <th>Description</th>
-        <th>Short desc.</th>
-        <th>Image</th>
         <th>Created</th>
         <th>Control</th>
 	</tr>
@@ -27,10 +31,9 @@
 			<th>{{ $news->id }}</th>
 			<td>{{ optional($news->category)->title }}</td>
 			<td>{{ $news->title }}</td>
-			<td>{{ $news->author }}</td>
 			<td class="description_cell">{{ $news->description }}</td>
-			<td>{{ $news->short }}</td>
 			<td>{{ $news->image }}</td>
+			<td>{{ $news->author }}</td>
 			<td>{{ $news->created_at }}</td>
 			<td>
 				<a href="{{ route('admin.news.edit', ['news' => $news->id]) }}">Edit</a>
